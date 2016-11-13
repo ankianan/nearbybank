@@ -21,21 +21,25 @@
         margin: 0;
         padding: 0;
     }
+    
     a:before {
-	    content: attr(data-icon);
-	}
+        content: attr(data-icon);
+    }
     </style>
 </head>
 
 <body>
-    <div class="w3-container w3-teal">
-        <h1>Near by bank</h1>
-    </div>
     <div id="map"></div>
     <div id="root"></div>
 </body>
 <script type="text/javascript" src="src/j/interfaces.js"></script>
+<script type="text/javascript">
+	window.interfaces.page({
+		popstate: true
+	})
+	window.interfaces.page.base("http://localhost/Static-git/Static5/banks");
+</script>
 <script type="text/javascript" src="src/j/app.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8Vrsh9sUC0BwguzXT4TRyxE42yQfal4&libraries=places&callback=initMap" async defer></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8Vrsh9sUC0BwguzXT4TRyxE42yQfal4&libraries=places" async defer></script>
 
 </html>
