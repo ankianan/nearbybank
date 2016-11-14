@@ -38,7 +38,8 @@
 <script type="text/javascript" src="gen/j/interfaces.min.js"></script>
 <script type="text/javascript">
 window.interfaces.page({
-    popstate: true
+    popstate: true,
+    hashbang: ('serviceWorker' in navigator) ? false : true
 })
 window.interfaces.page.base("//ankit90anand.github.io/nearbybank/pages");
 </script>
