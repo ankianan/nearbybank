@@ -3,7 +3,7 @@
   "short_name": "Bank",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "teal",
+  "background_color": "white",
   "description": "Let you find a bank or atm nearby",
   "icons": [{
     "src": "./favicon-1.png",
