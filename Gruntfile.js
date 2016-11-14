@@ -3,7 +3,7 @@ var nodeResolve = require('rollup-plugin-node-resolve');
 var commonjs = require('rollup-plugin-commonjs');
 var replace = require('rollup-plugin-replace');
 
-//var swPrecacheConf = require('./sw-precache.conf.js');
+var swPrecacheConf = require('./sw-precache.conf.js');
 
 module.exports = function(grunt) {
 
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
     require('../node_modules/grunt-config-merge')(grunt);
     require('../grunt/global/grunt-default.js')(grunt);
 
-    //swPrecacheConf(grunt);
+    swPrecacheConf(grunt);
     grunt.registerTask('interfaces', ["rollup:interfaces", "browserify:interfaces"])
-    grunt.registerTask('default', ["rollup:modules", "browserify:modules"/*, "swPrecache"*/])        
+    grunt.registerTask('default', ["rollup:modules", "browserify:modules", "swPrecache"])        
 };

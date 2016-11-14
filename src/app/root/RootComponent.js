@@ -5,6 +5,7 @@ import reducer from "./reducer.js";
 
 import routeAction from "./routeAction.js";
 import routeConfig from "./routeConfig.js";
+import * as routesStatic from "./routeStatic.js";
 
 import bankAction from "../bank/bankAction.js";
 import NearByBankList from "../bank/NearByBankList.js";
@@ -28,10 +29,10 @@ class RootComponent extends Virtual.Component {
     render() {
         let page = "";
         if (this.state.route) {
-            if (this.state.route.current == "/bank/nearby") {
+            if (this.state.route.current == routesStatic.BANK_NEARBY) {
                 page = <NearByBankList banks={this.state.bank.nearby} {...this.boundedBankAction} />
             }
-            if (this.state.route.current.indexOf("/bank/detail") != -1) {
+            if (this.state.route.current.indexOf(routesStatic.BANK_DETAIL) != -1) {
                 page = <BankDetail name={this.state.bank.name} detail={this.state.bank.detail} {...this.boundedBankAction} />
             }
         }

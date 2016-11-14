@@ -1,5 +1,5 @@
 let { page } = window.interfaces;
-
+import * as routesStatic from "./routeStatic.js";
 
 
 //Configuration
@@ -10,15 +10,15 @@ let { page } = window.interfaces;
 export default (actions) => {
     page('/', () => {
         console.log("hello1")
-        page.redirect('/bank/nearby');
+        page.redirect(routesStatic.BANK_NEARBY);
     });
 
-    page('/bank/nearby', () => {
+    page(routesStatic.BANK_NEARBY, () => {
         console.log("hello2")
         actions.bankNearBy();
     })
 
-    page('/bank/detail/:name', (ctx) => {
+    page(routesStatic.BANK_DETAIL+':name', (ctx) => {
         actions.bankDetail(ctx.params.name);
     })
 

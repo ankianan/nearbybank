@@ -1,5 +1,5 @@
 let { Virtual, page } = window.interfaces;
-
+import * as routeStatic from "../root/routeStatic";
 class BankTuple extends Virtual.Component {
     constructor() {
         super(...arguments);
@@ -22,7 +22,7 @@ class BankTuple extends Virtual.Component {
     }
     viewDetail() {
         this.props.getDetails(this.props.name);
-        page(`/bank/detail/${this.props.name}`);
+        page(`${routeStatic.BANK_DETAIL}${this.props.name}`);
     }
     render() {
         /*<div className="w3-right w3-col w3-margin-right" style={{"width": "40px"}}>

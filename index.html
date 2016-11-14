@@ -3,8 +3,9 @@
 
 <head>
     <title>Find nearby bank</title>
+    <base href="http://localhost/Static-git/Static5/banks/">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="src/c/w3.css">
     <meta charset="utf-8">
     <style>
     /* Always set the map height explicitly to define the size of the div
@@ -29,14 +30,17 @@
 </head>
 
 <body>
+
     <div id="map"></div>
     <div id="root"></div>
 </body>
+<script type="text/javascript" src="src/j/service-worker-registeration.js"></script>
 <script type="text/javascript" src="src/j/interfaces.js"></script>
 <script type="text/javascript">
 	window.interfaces.page({
 		popstate: true
 	})
+
 	window.interfaces.page.base("http://localhost/Static-git/Static5/banks");
 </script>
 <script type="text/javascript" src="src/j/app.js"></script>
