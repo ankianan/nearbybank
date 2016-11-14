@@ -3,6 +3,7 @@
 
 <head>
     <title>Find nearby bank</title>
+    <base href="http://localhost/Static-git/Static5/banks/">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="src/c/w3.css">
     <meta charset="utf-8">
@@ -29,15 +30,17 @@
 </head>
 
 <body>
+
     <div id="map"></div>
     <div id="root"></div>
 </body>
+<script type="text/javascript" src="src/j/service-worker-registeration.js"></script>
 <script type="text/javascript" src="src/j/interfaces.js"></script>
 <script type="text/javascript">
 	window.interfaces.page({
 		popstate: true
 	})
-	window.interfaces.page.base("https://ankit90anand.github.io/nearbybank/");
+	window.interfaces.page.base("https://ankit90anand.github.io/nearbybank");
 </script>
 <script type="text/javascript" src="src/j/app.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8Vrsh9sUC0BwguzXT4TRyxE42yQfal4&libraries=places" async defer></script>

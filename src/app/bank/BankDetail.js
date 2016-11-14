@@ -1,4 +1,5 @@
 let { Virtual } = window.interfaces;
+import * as routeStatic from "../root/routeStatic";
 class BankDetail extends Virtual.Component {
     constructor() {
         super(...arguments);

@@ -116,18 +116,21 @@
       bank: bank
   });
 
+  var BANK_NEARBY = "/nearby";
+  var BANK_DETAIL = "/detail/";
+
   var routeAction = {
       bankNearBy: function () {
           return {
               type: "CHANGE_ROUTE",
-              route: "/bank/nearby",
+              route: BANK_NEARBY,
               title: "Nearby Banks"
           };
       },
       bankDetail: function (name) {
           return {
               type: "CHANGE_ROUTE",
-              route: "/bank/detail/" + name,
+              route: "" + BANK_DETAIL + name,
               title: "Bank Status"
           };
       }
@@ -140,19 +143,18 @@
       popstate: true
   });
   */
-
   var routeConfig = (function (actions) {
       page$1('/', function () {
           console.log("hello1");
-          page$1.redirect('/bank/nearby');
+          page$1.redirect(BANK_NEARBY);
       });
 
-      page$1('/bank/nearby', function () {
+      page$1(BANK_NEARBY, function () {
           console.log("hello2");
           actions.bankNearBy();
       });
 
-      page$1('/bank/detail/:name', function (ctx) {
+      page$1(BANK_DETAIL + ':name', function (ctx) {
           actions.bankDetail(ctx.params.name);
       });
 
@@ -209,7 +211,7 @@
 
       BankTuple.prototype.viewDetail = function viewDetail() {
           this.props.getDetails(this.props.name);
-          page$2("/bank/detail/" + this.props.name);
+          page$2("" + BANK_DETAIL + this.props.name);
       };
 
       BankTuple.prototype.render = function render() {
@@ -540,10 +542,10 @@
       RootComponent.prototype.render = function render() {
           var page = "";
           if (this.state.route) {
-              if (this.state.route.current == "/bank/nearby") {
+              if (this.state.route.current == BANK_NEARBY) {
                   page = Virtual$1.createElement(NearByBankList, _extends({ banks: this.state.bank.nearby }, this.boundedBankAction));
               }
-              if (this.state.route.current.indexOf("/bank/detail") != -1) {
+              if (this.state.route.current.indexOf(BANK_DETAIL) != -1) {
                   page = Virtual$1.createElement(BankDetail, _extends({ name: this.state.bank.name, detail: this.state.bank.detail }, this.boundedBankAction));
               }
           }
