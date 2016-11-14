@@ -24,7 +24,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["./gen/c/w3.min.css","a026526a93f1d2932cacf6ab5b461742"],["./gen/j/app.min.js","b6adb835d755f80daf0b7a7e0c49682f"],["./gen/j/interfaces.min.js","0ea55503aba9aac16bea5384a2e65900"],["./gen/j/service-worker-registeration.min.js","9121bf64506e65340462c3798572b902"],["./index.html","1247445cece0558f10f53a217bd80286"]];
+var precacheConfig = [["./gen/c/w3.min.css","a026526a93f1d2932cacf6ab5b461742"],["./gen/j/app.min.js","b6adb835d755f80daf0b7a7e0c49682f"],["./gen/j/interfaces.min.js","0ea55503aba9aac16bea5384a2e65900"],["./gen/j/service-worker-registeration.min.js","9121bf64506e65340462c3798572b902"],["./index.html","08e501dc033ad1ad18c38f73931cb674"]];
 var cacheName = 'sw-precache-v2-Naurki.com-' + (self.registration ? self.registration.scope : '');
 
 
@@ -180,7 +180,7 @@ self.addEventListener('fetch', function(event) {
     if (!shouldRespond &&
         navigateFallback &&
         (event.request.mode === 'navigate') &&
-        isPathWhitelisted([], event.request.url)) {
+        isPathWhitelisted(["^\\/nearbybank\\/"], event.request.url)) {
       url = new URL(navigateFallback, self.location).toString();
       shouldRespond = urlsToCacheKeys.has(url);
     }
