@@ -61,7 +61,8 @@ module.exports = function(grunt, target) {
             // verbose defaults to false, but for the purposes of this demo, log more.
             verbose: true,
             directoryIndex: false,
-            navigateFallback: './index.html'
+            navigateFallback: './index.html',
+            navigateFallbackWhitelist: [/^\/nearbybank\//]
 
         };
 
