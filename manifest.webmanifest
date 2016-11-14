@@ -3,12 +3,12 @@
   "short_name": "Bank",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "white",
+  "background_color": "teal",
   "description": "Let you find a bank or atm nearby",
   "icons": [{
-    "src": "./favicon.ico",
+    "src": "./favicon-1.png",
     "sizes": "128x128",
-    "type": "image/icon"
+    "type": "image/png"
   }],
   "theme_color": "teal"
 }
