@@ -9,7 +9,8 @@ var packageJson = require('../package.json');
 var path = require('path');
 var swPrecache = require('sw-precache/lib/sw-precache.js');
 
-module.exports = function(grunt) {
+module.exports = function(grunt, target) {
+
     grunt.mergeConfig({
         swPrecache: {
             dev: {
@@ -20,6 +21,18 @@ module.exports = function(grunt) {
     });
 
     function writeServiceWorkerFile(rootDir, handleFetch, callback) {
+        console.log(target);
+        var staticPath = "/src";
+        var staticExt = "";
+
+
+        if (target == "stag") {
+            staticPath = "/gen"
+            staticExt = ".min"
+        }
+
+
+
         var config = {
             cacheId: packageJson.name,
             /*dynamicUrlToDependencies: {
@@ -39,16 +52,16 @@ module.exports = function(grunt) {
             handleFetch: handleFetch,
             logger: grunt.log.writeln,
             staticFileGlobs: [
-                rootDir + '/src/c/**.css',
+                rootDir + staticPath + '/c/**' + staticExt + '.css',
                 rootDir + '/**.html',
-                rootDir + '/src/i/**.*',
-                rootDir + '/src/j/**.js'
+                rootDir + staticPath + '/i/**' + staticExt + '.*',
+                rootDir + staticPath + '/j/**' + staticExt + '.js'
             ],
             //stripPrefix: rootDir + '/src',
             // verbose defaults to false, but for the purposes of this demo, log more.
             verbose: true,
             directoryIndex: false,
-            navigateFallback : './index.html'
+            navigateFallback: './index.html'
 
         };
 

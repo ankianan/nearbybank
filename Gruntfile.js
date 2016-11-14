@@ -92,7 +92,7 @@ module.exports = function(grunt) {
     require('../node_modules/grunt-config-merge')(grunt);
     require('../grunt/global/grunt-default.js')(grunt);
 
-    swPrecacheConf(grunt);
+    swPrecacheConf(grunt,target);
     grunt.registerTask('interfaces', ["rollup:interfaces", "browserify:interfaces"])
-    grunt.registerTask('default', ["rollup:modules", "browserify:modules", "swPrecache"])        
+    grunt.registerTask('default', ["rollup:modules", "browserify:modules"])        
 };
