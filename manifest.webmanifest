@@ -1,0 +1,14 @@
+{
+  "name": "Nearby Bank",
+  "short_name": "Bank",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "white",
+  "description": "Let you find a bank or atm nearby",
+  "icons": [{
+    "src": "./favicon.ico",
+    "sizes": "128x128",
+    "type": "image/icon"
+  }],
+  "theme_color": "teal"
+}
