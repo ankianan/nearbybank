@@ -62,7 +62,7 @@ module.exports = function(grunt, target) {
             verbose: true,
             directoryIndex: false,
             navigateFallback: './index.html',
-            navigateFallbackWhitelist: [/^\/nearbybank\//]
+            navigateFallbackWhitelist: [/^\/nearbybank\/pages\//]
 
         };
 
