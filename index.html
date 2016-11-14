@@ -3,7 +3,7 @@
 
 <head>
     <title>Find nearby bank</title>
-    <base href="http://localhost:3000/">
+    <base href="//localhost:3000/nearbybank/">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" type="image/icon" href="./favicon.ico" />
     <link rel="stylesheet" href="gen/c/w3.min.css">
@@ -38,10 +38,10 @@
 <script type="text/javascript" src="gen/j/interfaces.min.js"></script>
 <script type="text/javascript">
 window.interfaces.page({
-    popstate: true
+    popstate: true,
+    hashbang: ('serviceWorker' in navigator) ? false : true
 })
-
-window.interfaces.page.base("http://localhost:3000/nearbybank");
+window.interfaces.page.base("//localhost:3000/nearbybank/pages");
 </script>
 <script type="text/javascript" src="gen/j/app.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8Vrsh9sUC0BwguzXT4TRyxE42yQfal4&libraries=places" async defer></script>
