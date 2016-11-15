@@ -24,11 +24,9 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["./gen/c/w3.min.css","a026526a93f1d2932cacf6ab5b461742"],["./gen/j/app.min.js","b6adb835d755f80daf0b7a7e0c49682f"],["./gen/j/interfaces.min.js","0ea55503aba9aac16bea5384a2e65900"],["./gen/j/service-worker-registeration.min.js","9121bf64506e65340462c3798572b902"],["./index.html","d4d30da28a3f293ffd68ed2338110c9d"]];
+var precacheConfig = [["./index.html","95b0a8928d825eca449623388bc7a7a1"],["./src/c/w3.css","a7683055bbadd9bcd9bc429021cc5770"],["./src/j/app.js","48ac48af45ee18166033e9c18da847b1"],["./src/j/interfaces.js","e955b9a50f6f4d935776af46d6bd72aa"],["./src/j/service-worker-registeration.js","500402fdfb72258bd5f2d198fc8ba1d0"]];
 var cacheName = 'sw-precache-v2-Naurki.com-' + (self.registration ? self.registration.scope : '');
 
-
-var ignoreUrlParametersMatching = [/^utm_/];
 
 
 
@@ -152,58 +150,6 @@ self.addEventListener('activate', function(event) {
     })
   );
 });
-
-
-self.addEventListener('fetch', function(event) {
-  if (event.request.method === 'GET') {
-    // Should we call event.respondWith() inside this fetch event handler?
-    // This needs to be determined synchronously, which will give other fetch
-    // handlers a chance to handle the request if need be.
-    var shouldRespond;
-
-    // First, remove all the ignored parameter and see if we have that URL
-    // in our cache. If so, great! shouldRespond will be true.
-    var url = stripIgnoredUrlParameters(event.request.url, ignoreUrlParametersMatching);
-    shouldRespond = urlsToCacheKeys.has(url);
-
-    // If shouldRespond is false, check again, this time with 'index.html'
-    // (or whatever the directoryIndex option is set to) at the end.
-    var directoryIndex = '';
-    if (!shouldRespond && directoryIndex) {
-      url = addDirectoryIndex(url, directoryIndex);
-      shouldRespond = urlsToCacheKeys.has(url);
-    }
-
-    // If shouldRespond is still false, check to see if this is a navigation
-    // request, and if so, whether the URL matches navigateFallbackWhitelist.
-    var navigateFallback = './index.html';
-    if (!shouldRespond &&
-        navigateFallback &&
-        (event.request.mode === 'navigate') &&
-        isPathWhitelisted(["^\\/nearbybank\\/pages\\/"], event.request.url)) {
-      url = new URL(navigateFallback, self.location).toString();
-      shouldRespond = urlsToCacheKeys.has(url);
-    }
-
-    // If shouldRespond was set to true at any point, then call
-    // event.respondWith(), using the appropriate cache key.
-    if (shouldRespond) {
-      event.respondWith(
-        caches.open(cacheName).then(function(cache) {
-          return cache.match(urlsToCacheKeys.get(url));
-        }).catch(function(e) {
-          // Fall back to just fetch()ing the request if some unexpected error
-          // prevented the cached response from being valid.
-          console.warn('Couldn\'t serve response for "%s" from cache: %O', event.request.url, e);
-          return fetch(event.request);
-        })
-      );
-    }
-  }
-});
-
-
-
 
 
 

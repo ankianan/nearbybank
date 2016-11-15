@@ -1,5 +1,6 @@
 let { Virtual } = window.interfaces;
 import BankTuple from "./BankTuple";
+import BankFilter from "./BankFilter";
 import { main, map } from "./googlePlaces.js";
 
 class NearByBankList extends Virtual.Component {
@@ -15,7 +16,7 @@ class NearByBankList extends Virtual.Component {
             numberOfTupleToBeShown
         };
 
-        if (!this.props.banks.length) {
+        if (!this.props.bank.filtered.length) {
             main(this.callback.bind(this));
         }
 
@@ -42,7 +43,7 @@ class NearByBankList extends Virtual.Component {
     }
     showMore() {
         let { offset, numberOfTupleToBeShown } = this.state;
-        let total = this.props.banks.length;
+        let total = this.props.bank.filtered.length;
 
         let remaining = total - numberOfTupleToBeShown;
 
@@ -58,9 +59,9 @@ class NearByBankList extends Virtual.Component {
     }
     render() {
 
-
-
-        let banksNearby = this.props.banks
+        let banksNearby = this.props.bank.filtered.map((id) => {
+                return this.props.bank.places[id];
+            })
             .slice(0, this.state.numberOfTupleToBeShown)
             .map((value, index) => {
 
@@ -68,11 +69,12 @@ class NearByBankList extends Virtual.Component {
 
             });
 
-        let showMore = (this.props.banks.length > this.state.numberOfTupleToBeShown) ? <button className="w3-btn-block w3-teal" onClick={this.showMore.bind(this)} >Show More</button> : "";
+        let showMore = (this.props.bank.filtered.length > this.state.numberOfTupleToBeShown) ? <button className="w3-btn-block w3-teal" onClick={this.showMore.bind(this)} >Show More</button> : "";
 
 
 
         return <div>
+                    <BankFilter filterNearBy={this.props.filterNearBy} />
                     <ul className="w3-ul">
                       {banksNearby}
                     </ul>
