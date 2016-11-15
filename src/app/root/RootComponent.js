@@ -30,7 +30,7 @@ class RootComponent extends Virtual.Component {
         let page = "";
         if (this.state.route) {
             if (this.state.route.current == routesStatic.BANK_NEARBY) {
-                page = <NearByBankList banks={this.state.bank.nearby} {...this.boundedBankAction} />
+                page = <NearByBankList bank={this.state.bank} {...this.boundedBankAction} />
             }
             if (this.state.route.current.indexOf(routesStatic.BANK_DETAIL) != -1) {
                 page = <BankDetail name={this.state.bank.name} detail={this.state.bank.detail} {...this.boundedBankAction} />

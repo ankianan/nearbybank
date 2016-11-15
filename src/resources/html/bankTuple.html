@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <style type="text/css">
+    .open_now {
+        width: 10px;
+        height: 10px;
+        background: teal;
+        display: inline-block;
+        border-radius: 50%;
+    }
+    </style>
+</head>
+
+<body>
+    <ul class="w3-ul">
+        <li class="w3-padding-16 w3-row" onClick={this.viewDetail.bind(this)}>
+            <div class="w3-col" style="width: 80%">
+                <span class="w3-xlarge">{this.props.name }</span>
+                <br>
+                <span>{this.props.vicinity}</span>
+            </div>
+            <div class="w3-col w3-center" style="width: 20%">
+                <em class="open_now"></em>
+            </div>
+        </li>
+        <li class="w3-padding-16 w3-row" onClick={this.viewDetail.bind(this)}>
+            <div class="w3-col" style="width: 80%">
+                <span class="w3-xlarge">{this.props.name }</span>
+                <br>
+                <span>{this.props.vicinity}</span>
+            </div>
+            <div class="w3-col w3-center" style="width: 20%">
+                <em></em>
+            </div>
+        </li>
+    </ul>
+</body>
+
+</html>

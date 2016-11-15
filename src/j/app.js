@@ -83,18 +83,53 @@
       var state = arguments.length <= 0 || arguments[0] === undefined ? {
           name: "",
           detail: {},
-          nearby: []
+          nearby: [],
+          places: {},
+          filtered: []
+
       } : arguments[0];
       var action = arguments[1];
 
-      switch (action.type) {
-          case "GET_DETAIL":
-              return _extends({}, state, { name: action.name, detail: { "morning": 50, "afternoon": 80, "evening": 40, "lateEvening": 10 } });
-          case "SAVE_NEARBY":
-              return _extends({}, state, { nearby: action.nearby });
-          default:
-              return state;
-      }
+      var _ret = function () {
+          switch (action.type) {
+              case "GET_DETAIL":
+                  return {
+                      v: _extends({}, state, { name: action.name, detail: { "morning": 50, "afternoon": 80, "evening": 40, "lateEvening": 10 } })
+                  };
+              case "SAVE_NEARBY":
+                  var nearby = [];
+                  var places = {};
+                  action.nearby.map(function (data) {
+                      nearby.push(data.id);
+                      places[data.id] = data;
+                  });
+                  return {
+                      v: _extends({}, state, { nearby: nearby, places: places, filtered: nearby })
+                  };
+              case "FILTER_NEARBY":
+                  return {
+                      v: _extends({}, state, {
+                          filtered: state.nearby.filter(function (id) {
+                              var branchName = state.places[id].name.toLowerCase();
+                              var filterType = action.filterType;
+                              var filterText = action.filterText;
+
+
+                              if (branchName.indexOf(filterText.toLowerCase()) != -1) {
+                                  return true;
+                              }
+                              return false;
+                          })
+                      })
+                  };
+              default:
+                  return {
+                      v: state
+                  };
+          }
+      }();
+
+      if (typeof _ret === "object") return _ret.v;
   })
 
   var combineReducers = window.interfaces.Redux.combineReducers;
@@ -174,6 +209,16 @@
           return {
               type: "SAVE_NEARBY",
               nearby: nearby
+          };
+      },
+      filterNearBy: function (_ref) {
+          var filterType = _ref.filterType;
+          var filterText = _ref.filterText;
+
+          return {
+              type: "FILTER_NEARBY",
+              filterType: filterType,
+              filterText: filterText
           };
       }
   };
@@ -274,6 +319,48 @@
       }
   }
 
+  var Virtual$4 = window.interfaces.Virtual;
+
+  var BankFilter = function (_Virtual$Component) {
+      inherits(BankFilter, _Virtual$Component);
+
+      function BankFilter() {
+          classCallCheck(this, BankFilter);
+
+          var _this = possibleConstructorReturn(this, _Virtual$Component.apply(this, arguments));
+
+          _this.state = {
+              filterText: "",
+              filterType: ""
+          };
+          return _this;
+      }
+
+      BankFilter.prototype.shouldComponenetUpdate = function shouldComponenetUpdate(nextProps, nexState) {
+          return nexState != this.state;
+      };
+
+      BankFilter.prototype.setFilterText = function setFilterText(event) {
+          var newState = _extends({}, this.state, { filterText: event.target.value });
+          this.setState(newState);
+
+          this.props.filterNearBy(newState);
+      };
+
+      BankFilter.prototype.setFilterType = function setFilterType(filterType) {
+          var newState = _extends({}, this.state, { filterType: filterType });
+          this.setState(newState);
+
+          this.props.filterNearBy(newState);
+      };
+
+      BankFilter.prototype.render = function render() {
+          return Virtual$4.createElement("input", { className: "w3-input", type: "text", placeholder: "Search your banks or atm", value: this.state.filterText, onChange: this.setFilterText.bind(this) });
+      };
+
+      return BankFilter;
+  }(Virtual$4.Component);
+
   var Virtual$2 = window.interfaces.Virtual;
 
   var NearByBankList = function (_Virtual$Component) {
@@ -292,7 +379,7 @@
               numberOfTupleToBeShown: numberOfTupleToBeShown
           };
 
-          if (!_this.props.banks.length) {
+          if (!_this.props.bank.filtered.length) {
               main(_this.callback.bind(_this));
           }
 
@@ -322,7 +409,7 @@
           var offset = _state.offset;
           var numberOfTupleToBeShown = _state.numberOfTupleToBeShown;
 
-          var total = this.props.banks.length;
+          var total = this.props.bank.filtered.length;
 
           var remaining = total - numberOfTupleToBeShown;
 
@@ -340,12 +427,14 @@
       NearByBankList.prototype.render = function render() {
           var _this2 = this;
 
-          var banksNearby = this.props.banks.slice(0, this.state.numberOfTupleToBeShown).map(function (value, index) {
+          var banksNearby = this.props.bank.filtered.map(function (id) {
+              return _this2.props.bank.places[id];
+          }).slice(0, this.state.numberOfTupleToBeShown).map(function (value, index) {
 
               return Virtual$2.createElement(BankTuple, { key: index, name: value.name, vicinity: value.vicinity, getDetails: _this2.props.getDetails });
           });
 
-          var showMore = this.props.banks.length > this.state.numberOfTupleToBeShown ? Virtual$2.createElement(
+          var showMore = this.props.bank.filtered.length > this.state.numberOfTupleToBeShown ? Virtual$2.createElement(
               "button",
               { className: "w3-btn-block w3-teal", onClick: this.showMore.bind(this) },
               "Show More"
@@ -354,6 +443,7 @@
           return Virtual$2.createElement(
               "div",
               null,
+              Virtual$2.createElement(BankFilter, { filterNearBy: this.props.filterNearBy }),
               Virtual$2.createElement(
                   "ul",
                   { className: "w3-ul" },
@@ -366,7 +456,7 @@
       return NearByBankList;
   }(Virtual$2.Component);
 
-  var Virtual$4 = window.interfaces.Virtual;
+  var Virtual$5 = window.interfaces.Virtual;
 
   var BankDetail = function (_Virtual$Component) {
       inherits(BankDetail, _Virtual$Component);
@@ -377,122 +467,122 @@
       }
 
       BankDetail.prototype.render = function render() {
-          return Virtual$4.createElement(
+          return Virtual$5.createElement(
               "div",
               { className: "w3-card-4" },
-              Virtual$4.createElement(
+              Virtual$5.createElement(
                   "header",
                   { className: "w3-container w3-light-grey" },
-                  Virtual$4.createElement(
+                  Virtual$5.createElement(
                       "h3",
                       null,
                       this.props.name
                   )
               ),
-              Virtual$4.createElement(
+              Virtual$5.createElement(
                   "div",
                   { className: "w3-container" },
-                  Virtual$4.createElement(
+                  Virtual$5.createElement(
                       "p",
                       null,
                       "Trends"
                   ),
-                  Virtual$4.createElement(
+                  Virtual$5.createElement(
                       "table",
                       { className: "w3-table w3-teal" },
-                      Virtual$4.createElement(
+                      Virtual$5.createElement(
                           "tbody",
                           null,
-                          Virtual$4.createElement(
+                          Virtual$5.createElement(
                               "tr",
                               null,
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "th",
                                   null,
                                   "Timing"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "th",
                                   { className: "w3-hide-small" },
                                   "Duration"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "th",
                                   null,
                                   "Active bankers"
                               )
                           ),
-                          Virtual$4.createElement(
+                          Virtual$5.createElement(
                               "tr",
                               null,
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   null,
                                   "Morning"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   { className: "w3-hide-small" },
                                   "08 am to 12 pm"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   null,
                                   this.props.detail.morning
                               )
                           ),
-                          Virtual$4.createElement(
+                          Virtual$5.createElement(
                               "tr",
                               null,
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   null,
                                   "Afternoon"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   { className: "w3-hide-small" },
                                   "12 pm to 04 pm"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   null,
                                   this.props.detail.afternoon
                               )
                           ),
-                          Virtual$4.createElement(
+                          Virtual$5.createElement(
                               "tr",
                               null,
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   null,
                                   "Evening"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   { className: "w3-hide-small" },
                                   "04 pm to 08 pm"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   null,
                                   this.props.detail.evening
                               )
                           ),
-                          Virtual$4.createElement(
+                          Virtual$5.createElement(
                               "tr",
                               null,
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   null,
                                   "Late Evening"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   { className: "w3-hide-small" },
                                   "After 08pm"
                               ),
-                              Virtual$4.createElement(
+                              Virtual$5.createElement(
                                   "td",
                                   null,
                                   this.props.detail.lateEvening
@@ -500,13 +590,13 @@
                           )
                       )
                   ),
-                  Virtual$4.createElement("br", null)
+                  Virtual$5.createElement("br", null)
               )
           );
       };
 
       return BankDetail;
-  }(Virtual$4.Component);
+  }(Virtual$5.Component);
 
   var _window$interfaces$1 = window.interfaces;
   var Virtual$1 = _window$interfaces$1.Virtual;
@@ -543,7 +633,7 @@
           var page = "";
           if (this.state.route) {
               if (this.state.route.current == BANK_NEARBY) {
-                  page = Virtual$1.createElement(NearByBankList, _extends({ banks: this.state.bank.nearby }, this.boundedBankAction));
+                  page = Virtual$1.createElement(NearByBankList, _extends({ bank: this.state.bank }, this.boundedBankAction));
               }
               if (this.state.route.current.indexOf(BANK_DETAIL) != -1) {
                   page = Virtual$1.createElement(BankDetail, _extends({ name: this.state.bank.name, detail: this.state.bank.detail }, this.boundedBankAction));

@@ -10,6 +10,7 @@ var path = require('path');
 var swPrecache = require('sw-precache/lib/sw-precache.js');
 
 module.exports = function(grunt, target) {
+    
 
     grunt.mergeConfig({
         swPrecache: {
@@ -21,7 +22,7 @@ module.exports = function(grunt, target) {
     });
 
     function writeServiceWorkerFile(rootDir, handleFetch, callback) {
-        console.log(target);
+        
         var staticPath = "/src";
         var staticExt = "";
 
