@@ -4,7 +4,7 @@ var app = express();
 
 app.use(express.static(__dirname));
 
-app.get('/nearbybank/pages*', function(req, res) {
+app.get('/pages*', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
