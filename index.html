@@ -38,10 +38,10 @@
 <script type="text/javascript" src="gen/j/service-worker-registeration.min.js"></script>
 <script type="text/javascript" src="gen/j/interfaces.min.js"></script>
 <script type="text/javascript">
-window.interfaces.page.base("//peerby.in/");
+window.interfaces.page.base("//peerby.in/pages");
 window.interfaces.page({
     popstate: true,
-    hashbang: true
+    hashbang: !("serviceWorker" in navigator)
 });
 
 </script>
