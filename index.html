@@ -35,14 +35,15 @@
     <div id="map"></div>
     <div id="root"></div>
 </body>
-<!--<script type="text/javascript" src="gen/j/service-worker-registeration.min.js"></script>-->
+<script type="text/javascript" src="gen/j/service-worker-registeration.min.js"></script>
 <script type="text/javascript" src="gen/j/interfaces.min.js"></script>
 <script type="text/javascript">
+window.interfaces.page.base("//peerby.in/pages");
 window.interfaces.page({
     popstate: true,
     hashbang: true
-})
-window.interfaces.page.base("//peerby.in/");
+});
+
 </script>
 <script type="text/javascript" src="gen/j/app.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8Vrsh9sUC0BwguzXT4TRyxE42yQfal4&libraries=places" async defer></script>
