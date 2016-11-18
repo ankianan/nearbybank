@@ -38,15 +38,25 @@
 <script type="text/javascript" src="gen/j/service-worker-registeration.min.js"></script>
 <script type="text/javascript" src="gen/j/interfaces.min.js"></script>
 <script type="text/javascript">
+if (!("serviceWorker" in navigator)) {
+    window.interfaces.page.base("//peerby.in/");
+    window.interfaces.page({
+        popstate: true,
+        hashbang: !("serviceWorker" in navigator)
+    });
 
-window.interfaces.page({
-    popstate: true,
-    hashbang: !("serviceWorker" in navigator)
-});
-window.interfaces.page.base("//peerby.in/pages");
+} else {
+    window.interfaces.page({
+        popstate: true,
+        //hashbang: !("serviceWorker" in navigator)
+    });
+    window.interfaces.page.base("//peerby.in/pages");
+}
+//if("serviceWorker" in navigator){
+
+//}
 </script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY8Vrsh9sUC0BwguzXT4TRyxE42yQfal4&libraries=places"></script>
-
 <script type="text/javascript" src="gen/j/app.min.js"></script>
 
 </html>
