@@ -1,6 +1,6 @@
 # nearbybank
-
-<a href="https://ankit90anand.github.io/nearbybank/">Find bank near you</a>
+### Demo
+<a href="https://peerby.in">https://peerby.in</a>
 
 Features:
 - List nearby banks and atm.
